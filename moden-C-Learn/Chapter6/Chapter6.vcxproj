@@ -130,6 +130,7 @@
     <ClInclude Include="SimpleiUniquePoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="SimpleiUniquePoint.cpp" />
     <ClCompile Include="templateCheck.cpp" />
   </ItemGroup>
