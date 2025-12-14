@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{17623B74-D1D3-40B6-8FB5-A8D019362754}|Chapter6.vcxproj|D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{17623B74-D1D3-40B6-8FB5-A8D019362754}|Chapter6.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\moden-C-Learn\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
@@ -30,12 +34,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-14T12:22:43.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": ".gitignore",
               "DocumentMoniker": "D:\\Code\\moden-C-Learn\\.gitignore",
               "RelativeDocumentMoniker": "..\\..\\.gitignore",
               "ToolTip": "D:\\Code\\moden-C-Learn\\.gitignore",
               "RelativeToolTip": "..\\..\\.gitignore",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-12-14T12:15:43.46Z",
               "EditorCaption": ""
@@ -50,7 +67,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "templateCheck.cpp",
               "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\templateCheck.cpp",
               "RelativeDocumentMoniker": "templateCheck.cpp",
@@ -63,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "SimpleiUniquePoint.cpp",
               "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\SimpleiUniquePoint.cpp",
               "RelativeDocumentMoniker": "SimpleiUniquePoint.cpp",
@@ -75,7 +92,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "SimpleiUniquePoint.h",
               "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter6\\SimpleiUniquePoint.h",
               "RelativeDocumentMoniker": "SimpleiUniquePoint.h",
