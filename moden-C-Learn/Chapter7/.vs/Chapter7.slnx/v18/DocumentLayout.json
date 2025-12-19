@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2EADAEE1-7EE1-4E97-9101-98C0949CC5E6}|Chapter7.vcxproj|D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2EADAEE1-7EE1-4E97-9101-98C0949CC5E6}|Chapter7.vcxproj|solutionrelative:test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2EADAEE1-7EE1-4E97-9101-98C0949CC5E6}|Chapter7.vcxproj|D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{2EADAEE1-7EE1-4E97-9101-98C0949CC5E6}|Chapter7.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -18,11 +22,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "test.cpp",
+              "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\test.cpp",
+              "RelativeDocumentMoniker": "test.cpp",
+              "ToolTip": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\test.cpp",
+              "RelativeToolTip": "test.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-19T10:12:33.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "main.cpp",
+              "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AgIAABsAAAAAAAAAAABIwCcAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-14T10:56:22.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Heap.h",
               "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\Heap.h",
               "RelativeDocumentMoniker": "Heap.h",
@@ -30,29 +60,11 @@
               "RelativeToolTip": "Heap.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-12-18T11:53:27.337Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\main.cpp",
-              "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "D:\\Code\\moden-C-Learn\\moden-C-Learn\\Chapter7\\main.cpp*",
-              "RelativeToolTip": "main.cpp*",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAACcAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-12-14T10:56:22.933Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T11:53:27.337Z"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }
