@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include"Heap.h"
+#include<limits>
 //一个运行时溢出检查的Checked-Integer类
 struct CheckedInt {
 	int value;
@@ -23,6 +24,9 @@ struct CheckedInt {
 			throw std::underflow_error("Integer underflow on subtraction");
 		}
 		return CheckedInt(value - other.value);
+	}
+	explicit operator int() const{
+		return value;
 	}
 	CheckedInt operator*(const CheckedInt& other) const {
 		if (value > 0 && other.value > 0 && value > INT_MAX / other.value) {
@@ -88,5 +92,11 @@ int main() {
 		std::cerr << "Allocation error: " << e.what() << std::endl;
 	}
 	std::cout << "Hello, World!" << std::endl;
+	//long double最大值转float测试
+	float m = std::numeric_limits<long double>::max();
+	std::cout << m;
+	int64_t n = std::numeric_limits<int64_t>::max();
+	int32_t b1=static_cast<int32_t>(n);
+	if (n!= b1)std::cout << b1 <<" " << n;
 	return 0;
 }

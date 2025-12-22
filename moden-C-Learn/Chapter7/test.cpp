@@ -46,4 +46,7 @@ constexpr Color rgb_to_hsv(uint8_t r, uint8_t g, uint8_t b) {
 		hc.H = -1;
 		return hc;
 	}
+	float a = 10;
+	long double c = 10;
+	auto d = c+a;
 }
