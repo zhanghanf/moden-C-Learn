@@ -36,7 +36,13 @@ int sum(int count, ...) {
 	return total;
 }
 //这个函数不是类型安全的
-
+//测试可变参数函数
+void test_variadic_function() {
+	int result = sum(4, 1, 2, 3, 4); //传递4个整数参数
+	std::printf("The sum is: %d\n", result);
+	result = sum(3, 10, 20, 30); //传递3个整数参数
+	std::printf("The sum is: %d\n", result);
+}
 
 //可变参数模板
 template<typename... Args>
@@ -49,6 +55,6 @@ void print_all() {
 }
 template<typename T, typename... Args>
 void print_all(T first, Args... args) {
-	std::printf("%s ", std::to_string(first).c_str());
+	std::printf("%s ", to_string(first).c_str());
 	print_all(args...);
 }
