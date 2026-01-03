@@ -1,7 +1,6 @@
 #include<gtest/gtest.h>
-//测试加法功能
-TEST(strnicmp,_Equal_range_result){
-}
+
+
 #include<iostream>
 #include<stdexcept>
 #include<exception>
@@ -59,7 +58,7 @@ struct MockServiceBus : public IServiceBus {
 class AutoBrake {
 public:
     AutoBrake(IServiceBus& bus)//引用IServiceBus接口
-        : collision_threshold_s{ 5.0L }, speed_mps_{ 0.0L } // 移除多余的逗号和花括号
+        : collision_threshold_s{ 5.0L }, speed_mps_{0.0L}// 移除多余的逗号和花括号
     {
         bus.observe([this](const SpeedUpdata& updata) {
             speed_mps_ = updata.velocity_mps;
@@ -88,70 +87,39 @@ private:
     double speed_mps_;//速度
 };
 
-//使用autoBrake服务的示例
-//断言：单元测试的基础
-// //assert_that函数
-constexpr void assert_that(bool statement, const char* message) {
-    if (!statement)throw std::runtime_error{ message };
-}
+//Google测试
 
-//对初速度为0的需求编码单元测试
-void initial_speed_zero() {
+struct AutoBrakeTest : ::testing::Test {
     MockServiceBus bus;
     AutoBrake auto_brake{ bus };
-    //AutoBrake auto_brake{ [](SpeedUpdata&) {} };
-    assert_that(auto_brake.get_speed_mps() == 0.0L, "speed not eaual 0");
+};
+TEST_F(AutoBrakeTest, InitailCarSpeedIsZero) {
+    ASSERT_DOUBLE_EQ(0, auto_brake.get_speed_mps());
 }
-void senstivity_greater_than_1() {
-    //AutoBrake auto_brake{ [](const BrakeCommand&) {} };
-    MockServiceBus bus;
-    AutoBrake auto_brake{ bus };
-
-    //灵敏度始终大于1
-    try {
-        auto_brake.set_collision_threshold(0.5L);
-    }
-    catch (const std::exception&) {
-        return;
-    }
-    assert_that(false, "no exception throw");
+TEST_F(AutoBrakeTest, InitialSenstivityIsFive) {
+    ASSERT_DOUBLE_EQ(5, auto_brake.get_collision_threshold());
 }
-void initial_senstivity_five() {
-    //AutoBrake auto_brake{ [](const BrakeCommand&) {} };
-    MockServiceBus bus;
-    AutoBrake auto_brake{ bus };
-    assert_that(auto_brake.get_collision_threshold() == 5L, "sensitivity is not 5");//判断碰撞阈值为5
+TEST_F(AutoBrakeTest, SensitivityThanOne) {
+    ASSERT_ANY_THROW(auto_brake.set_collision_threshold(0.5));
 }
-//两次更新之间保存汽车速度的单元测试
-void speed_remain_between_updates() {
-    //AutoBrake auto_brake{ [](const BrakeCommand&) {} };
-    MockServiceBus bus;
-    AutoBrake auto_brake{ bus };
+TEST_F(AutoBrakeTest, SpeedIsSaved) {
     bus.speed_update_callback(SpeedUpdata{ 10L });
-    assert_that(auto_brake.get_speed_mps() == 10L, "speed not remain between updates");
-    bus.speed_update_callback(SpeedUpdata{ 20L });
-    assert_that(auto_brake.get_speed_mps() == 20L, "speed not remain between updates");
+    ASSERT_DOUBLE_EQ(10, auto_brake.get_speed_mps());
+    bus.speed_update_callback(SpeedUpdata{ 110L });
+    ASSERT_DOUBLE_EQ(110, auto_brake.get_speed_mps());
 }
-//汽车制动事件单元测试
-void auto_brake_event() {
-    MockServiceBus bus;
-    //bool brake_applied = false;
-    AutoBrake auto_brake{ bus };
-    auto_brake.set_collision_threshold(5L);
-    bus.speed_update_callback(SpeedUpdata{ 10L });
-    bus.car_detected_callback(CarDetected{ 10L,0L });
-    std::cout << bus.commendpublished_count << std::endl;
-    assert_that(bus.commendpublished_count == 0L, "brake not applied");
+TEST_F(AutoBrakeTest, NoAlertWhenNotImmiment) {
+    auto_brake.set_collision_threshold(2L);
+    bus.speed_update_callback(SpeedUpdata{100L});
+    bus.car_detected_callback(CarDetected{ 1000L,50L });
+    ASSERT_DOUBLE_EQ(0L, bus.commendpublished_count);
+
 }
 
-//测试工具：接受一个测试函数指针，并在try_catch中调用
-void run_test(void(*unit_test)(), const char* name) {
-    try {
-        unit_test();
-        printf("[+]Test %s success.\n", name);
-    }
-    catch (const std::exception& e) {
-        printf("[-]Test failure in %s. %s.\n", name, e.what());
-    }
+TEST_F(AutoBrakeTest, NoAlertWhenNotImmiment2) {
+    auto_brake.set_collision_threshold(2L);
+    bus.speed_update_callback(SpeedUpdata{ 100L });
+    bus.car_detected_callback(CarDetected{ 100L,0L });
+    ASSERT_EQ(1L, bus.commendpublished_count);
+    ASSERT_DOUBLE_EQ(1L, bus.last_brake_command.time_to_collision_s);
 }
-
