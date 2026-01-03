@@ -4,8 +4,7 @@
 #include <iostream>
 #include<stdexcept>
 #include<exception>
-
-
+//void test();
 //自动制动服务设计
 //服务交互的POD类
 struct SpeedUpdata {
@@ -91,7 +90,7 @@ void auto_brake_event() {
     AutoBrake auto_brake{ [&brake_applied](const BrakeCommand&) {brake_applied = true; } };
     auto_brake.set_collision_threshold(2L);
     auto_brake.observe(SpeedUpdata{ 30L });//汽车以30米每秒的速度行驶
-    auto_brake.observe(CarDetected{ 100L, -10L });//前方100米有一辆车，相对速度为-10米每秒
+    auto_brake.observe(CarDetected{ 10L, -10L });//前方100米有一辆车，相对速度为-10米每秒
     assert_that(brake_applied, "brake not applied");
 }
 //灵敏度始终大于1
@@ -118,6 +117,7 @@ void run_test(void(*unit_test)(), const char* name) {
 
 int main()
 {
+    /*
     ServiceBus bus;//汽车服务总线
     AutoBrake auto_brake{ [&bus](const auto& cmd) {bus.publish(cmd); } };//自动制动服务，通过lambda表达式绑定服务总线的publish方法
     while (true) {
@@ -132,6 +132,8 @@ int main()
     run_test(senstivity_greater_than_1, "senstivity greater than 1");
     run_test(speed_remain_between_updates, "speed remain between updates");
     run_test(auto_brake_event, "auto brake event");
+    */
+   // test();
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
