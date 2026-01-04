@@ -3,7 +3,6 @@
 #include"AutoBrake.h"
 //对IServiceBus进行模拟
 
-
 /*
 
 //期望
@@ -52,6 +51,7 @@ struct MockServiceBus : IServiceBus {
 	MOCK_METHOD(void, publish, (const BrakeCommand& cmd), (override));
 	MOCK_METHOD(void, observe, (SpeedUpdateFunc cd), (override));
 	MOCK_METHOD(void, observe, (CarDetectedFunc cd), (override));
+	MOCK_METHOD(void, observe, (SpeedLimitDectedFunc cd),( override));
 	//MOCK_METHOD()
 };
 using ::testing::_;
@@ -76,12 +76,16 @@ struct StrickAutoBrakeTest : ::testing::Test {
 			.WillOnce(Invoke([this](const auto& x) {
 			speed_update_call = x;
 				}));;
-
+		EXPECT_CALL(bus, observe(A<SpeedLimitDectedFunc>())).Times(1)
+			.WillOnce(Invoke([this](const auto& x) {
+			speed_limited_call = x;
+				}));;
 	}
 
 	StrictMock<MockServiceBus> bus;
 	SpeedUpdateFunc speed_update_call;
 	CarDetectedFunc car_call;
+	SpeedLimitDectedFunc speed_limited_call;
 };
 
 TEST_F(NiceAutoBrakeTest, AutoBrakeTest) {
@@ -93,18 +97,35 @@ TEST_F(NiceAutoBrakeTest, InitialSensetivityIsFive) {
 TEST_F(NiceAutoBrakeTest, InitialSensitivityThanone) {
 	ASSERT_ANY_THROW(auto_brake.set_collision_threshold(0.5));
 }
+TEST_F(NiceAutoBrakeTest, SpeedLimitDectedIs39) {
+	ASSERT_DOUBLE_EQ(39, auto_brake.get_speed());
+}
+TEST_F(StrickAutoBrakeTest, SpeedLimitedSet35) {
+	AutoBrake auto_brake{ bus };
+	speed_limited_call(SpeedLimitDected{ 35 });
+	ASSERT_DOUBLE_EQ(35, auto_brake.get_speed());
+}
 TEST_F(StrickAutoBrakeTest, NoAlertWhennoImminent) {
 	AutoBrake auto_brake{ bus };
 	auto_brake.set_collision_threshold(2L);
-	speed_update_call(SpeedUpdata{100L});
+	speed_update_call(SpeedUpdata{10L});
 	car_call(CarDetected{ 1000L,50L });
-
-
+	//speed_limited_call(SpeedLimitDected{ 35 });
+	
 }
 TEST_F(StrickAutoBrakeTest, AlertWhennoImminent) {
-	EXPECT_CALL(bus, publish(Field(&BrakeCommand::time_to_collision_s, DoubleEq(1L)))).Times(1);
+	EXPECT_CALL(bus, publish(Field(&BrakeCommand::time_to_collision_s, DoubleEq(1.0L)))).Times(1);
 	AutoBrake auto_brake{ bus };
 	auto_brake.set_collision_threshold(10L);
-	speed_update_call(SpeedUpdata{ 100L });
-	car_call(CarDetected{ 100L,0L });
+	speed_update_call(SpeedUpdata{ 30L });
+	car_call(CarDetected{ 30L,0L });
+}
+TEST_F(StrickAutoBrakeTest, AlertWhennoMoreSpeed) {
+	EXPECT_CALL(bus, publish(Field(&BrakeCommand::time_to_collision_s, DoubleEq(0L)))).Times(1);
+	AutoBrake auto_brake{ bus };
+	//auto_brake.set_collision_threshold(10L);
+	speed_limited_call(SpeedLimitDected{ 35 });
+	speed_update_call(SpeedUpdata{ 30L });
+	speed_limited_call(SpeedLimitDected{ 25 });
+	//car_call(CarDetected{ 100L,0L });
 }

@@ -17,6 +17,9 @@ struct CarDetected {
 struct BrakeCommand {            
     double time_to_collision_s;// 碰撞时间，单位秒
 };
+struct SpeedLimitDected {
+    unsigned short speed_mps;
+};
 // 服务总线的发布方法类型定义
 struct ServiceBus {            
     void publish(const BrakeCommand& cmd) {
@@ -28,11 +31,13 @@ struct ServiceBus {
 using SpeedUpdateFunc = std::function<void(const SpeedUpdata&)>;
 using CarDetectedFunc = std::function<void(const CarDetected&)>;
 using PublishFunc = std::function<void(const BrakeCommand&)>;
+using SpeedLimitDectedFunc = std::function<void(const SpeedLimitDected&)>;
 struct IServiceBus {
     virtual void publish(const BrakeCommand& cmd) = 0;//纯虚函数，发布制动命令
     virtual ~IServiceBus() = default;//虚析构函数
     virtual void observe(SpeedUpdateFunc) = 0;//观察速度更新
     virtual void observe(CarDetectedFunc) = 0;//观察前方车辆信息
+    virtual void observe(SpeedLimitDectedFunc) = 0;//观察前方限速信息
 };
 /*
 
@@ -58,12 +63,15 @@ struct MockServiceBus : public IServiceBus {
 class AutoBrake {
 public:
     AutoBrake(IServiceBus& bus)//引用IServiceBus接口
-        : collision_threshold_s{ 5.0L }, speed_mps_{ 0.0L }// 移除多余的逗号和花括号
+        : collision_threshold_s{ 5.0L }, speed_mps_{ 0.0L }, speed_mps{39}// 移除多余的逗号和花括号
     {
         /*
         */
-        bus.observe([this](const SpeedUpdata& updata) {
+        bus.observe([this,&bus](const SpeedUpdata& updata) {
             speed_mps_ = updata.velocity_mps;
+            if (speed_mps_ > speed_mps) {
+                bus.publish(BrakeCommand{ 0.0L });
+            }
             });
         bus.observe([this, &bus](const CarDetected& cd) {//引用捕获bus才能使用bus的方法
             const auto relative_speed = cd.relative_speed_mps - speed_mps_;//计算相对速度
@@ -73,6 +81,12 @@ public:
                     bus.publish(BrakeCommand{ time_to_collision });//发布制动命令
                 }
             }});
+            bus.observe([this, &bus](const SpeedLimitDected& cd) {
+                speed_mps = cd.speed_mps;
+                if (speed_mps_ > cd.speed_mps) {
+                    bus.publish(BrakeCommand{ 0.0L });
+                }
+                });
     }
     void set_collision_threshold(double x) {
         if (x < 1.0L) throw std::exception{ "Collision less than 1" };
@@ -84,8 +98,13 @@ public:
     double get_speed_mps() const {//获取
         return speed_mps_;
     }
+    
+    unsigned short get_speed()const {
+        return speed_mps;
+    }
 private:
     double collision_threshold_s;//灵敏度
     double speed_mps_;//速度
+    unsigned speed_mps;
 };
 

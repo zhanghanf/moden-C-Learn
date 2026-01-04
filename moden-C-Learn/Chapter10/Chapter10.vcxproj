@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HippoMock.cpp" />
+    <ClCompile Include="GoogleMock.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AutoBrake.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
