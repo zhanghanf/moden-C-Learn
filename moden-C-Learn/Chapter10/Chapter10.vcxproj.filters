@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoostTest.cpp">
+    <ClCompile Include="HippoMock.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

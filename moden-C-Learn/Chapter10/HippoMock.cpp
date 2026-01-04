@@ -1,4 +1,8 @@
-#pragma once
+//#define HM_NO_EXCEPTIONS 1
+#include<hippomocks.h>
+//#include"AutoBrake.h"
+//#define CATCH_CONFIG_MAIN
+#include<catch_amalgamated.hpp>
 #include<iostream>
 #include<stdexcept>
 #include<exception>
@@ -14,11 +18,11 @@ struct CarDetected {
     double distance_m;// 距离，单位米
     double relative_speed_mps;// 相对速度，单位米每秒
 };
-struct BrakeCommand {            
+struct BrakeCommand {
     double time_to_collision_s;// 碰撞时间，单位秒
 };
 // 服务总线的发布方法类型定义
-struct ServiceBus {            
+struct ServiceBus {
     void publish(const BrakeCommand& cmd) {
         std::cout << "BrakeCommand published: time_to_collision_s = " << cmd.time_to_collision_s << "s\n";// 示例输出
     }
@@ -31,30 +35,10 @@ using PublishFunc = std::function<void(const BrakeCommand&)>;
 struct IServiceBus {
     virtual void publish(const BrakeCommand& cmd) = 0;//纯虚函数，发布制动命令
     virtual ~IServiceBus() = default;//虚析构函数
-    virtual void observe(SpeedUpdateFunc) = 0;//观察速度更新
-    virtual void observe(CarDetectedFunc) = 0;//观察前方车辆信息
+    virtual void observe_speed(SpeedUpdateFunc) = 0;//观察速度更新
+    virtual void observe_car(CarDetectedFunc) = 0;//观察前方车辆信息
 };
-/*
 
-/服务总线实现类
-struct MockServiceBus : public IServiceBus {
-    void publish(const BrakeCommand& cmd) override {
-        commendpublished_count++;
-        std::cout << "MockServiceBus: BrakeCommand published: time_to_collision_s = " << cmd.time_to_collision_s << "s\n";
-        last_brake_command = cmd;
-    }
-    void observe(SpeedUpdateFunc func) override {
-        speed_update_callback = func;
-    }
-    void observe(CarDetectedFunc func) override {
-        car_detected_callback = func;
-    }
-    BrakeCommand last_brake_command{};//保存最后一个制动命令
-    int commendpublished_count{};//发布命令的次数
-    SpeedUpdateFunc speed_update_callback{};//速度更新回调函数
-    CarDetectedFunc car_detected_callback{};//前方车辆检测回调函数
-};
-*/
 class AutoBrake {
 public:
     AutoBrake(IServiceBus& bus)//引用IServiceBus接口
@@ -62,10 +46,10 @@ public:
     {
         /*
         */
-        bus.observe([this](const SpeedUpdata& updata) {
+        bus.observe_speed([this](const SpeedUpdata& updata) {
             speed_mps_ = updata.velocity_mps;
             });
-        bus.observe([this, &bus](const CarDetected& cd) {//引用捕获bus才能使用bus的方法
+        bus.observe_car([this, &bus](const CarDetected& cd) {//引用捕获bus才能使用bus的方法
             const auto relative_speed = cd.relative_speed_mps - speed_mps_;//计算相对速度
             if (relative_speed < 0) {//如果相对速度小于0，说明前方车辆在接近
                 const double time_to_collision = cd.distance_m / -relative_speed;
@@ -88,4 +72,47 @@ private:
     double collision_threshold_s;//灵敏度
     double speed_mps_;//速度
 };
+//hippomock模拟对象测试
 
+
+TEST_CASE("AutoBrake") {
+    MockRepository mocks;
+    mocks.autoExpect = false;
+    auto* bus = mocks.Mock<IServiceBus>();//指定模拟对象
+    CarDetectedFunc car_detected_call;
+    SpeedUpdateFunc speed_call;
+    //auto* bus = mocks.Mock<IServiceBus>();
+    mocks.ExpectCall(bus, IServiceBus::observe_speed).Do([&](const auto& x) {
+        speed_call = x;//设定期望
+        });
+    mocks.ExpectCall(bus, IServiceBus::observe_car).Do([&](const auto& x) {
+        car_detected_call = x;//设定期望
+        });
+    AutoBrake auto_brake{ *bus };
+    SECTION("save speed is 0") {
+        REQUIRE(auto_brake.get_speed_mps() == Catch::Approx(0));
+    }
+    SECTION("my testA") {
+        REQUIRE(auto_brake.get_speed_mps() == 0);
+        CHECK(auto_brake.get_speed_mps() == 0);
+    }
+    SECTION("my TestB") {
+        REQUIRE_THROWS(auto_brake.set_collision_threshold(0.5));
+        REQUIRE(auto_brake.get_collision_threshold() == Catch::Approx(5L));
+    }
+    SECTION("My test3") {
+        //bus.speed_update_callback(SpeedUpdata{ 100L });
+        speed_call(SpeedUpdata{ 10L });
+        REQUIRE(auto_brake.get_speed_mps() == Catch::Approx(10L));
+    }
+    SECTION("My Test4") {
+        
+        mocks.ExpectCall(bus, IServiceBus::publish)
+            .Match([](const auto& cmd) {
+            return cmd.time_to_collision_s == Catch::Approx(1); });
+    }
+    auto_brake.set_collision_threshold(10L);
+    speed_call(SpeedUpdata{ 100L });
+    car_detected_call(CarDetected{ 100L,0L });
+}
+    
