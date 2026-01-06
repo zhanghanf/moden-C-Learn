@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GoogleMock.cpp" />
+    <ClCompile Include="IServiceBus.cpp" />
+    <ClCompile Include="third_party\catch2\catch_amalgamated.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutoBrake.h" />
+    <ClInclude Include="third_party\catch2\catch_amalgamated.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>

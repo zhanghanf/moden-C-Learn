@@ -15,8 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SmartPtr.cpp">
+    <ClCompile Include="OathBreaker.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="third_party\catch2\catch_amalgamated.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="third_party\catch2\catch_amalgamated.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

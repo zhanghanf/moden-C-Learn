@@ -2,7 +2,7 @@
 #include <iostream>
 #include <boost/smart_ptr.hpp> // Boost智能指针头文件
 #include<boost/version.hpp>
-
+//#include<catch_amalgamated.hpp>
 //using namespace boost;
 /*
 int main() {
