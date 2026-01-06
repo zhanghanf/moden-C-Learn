@@ -16,14 +16,20 @@ struct DeadMenofDunharraw {//声明该类：接受空字符结尾的字符串
 	static int oaths_to_fullfill;
 };
 int DeadMenofDunharraw::oaths_to_fullfill = 0;
-using Scope = boost::scoped_ptr<DeadMenofDunharraw>;//声明该类型别名
+//using Scope = boost::scoped_ptr<DeadMenofDunharraw>;//声明该类型别名
 using ScopeArray = boost::scoped_array<int>;
-using Unique = std::unique_ptr<DeadMenofDunharraw>;
+using Scope = std::unique_ptr<DeadMenofDunharraw>;
+/*
 Unique uni{ new DeadMenofDunharraw };
 auto uni2 = std::move(uni);//将所有权转移给uni2，uni被析构
 TEST_CASE("unique_ptr test") {
 	REQUIRE_FALSE(uni);
 }
+*/
+using UniArray = std::unique_ptr<int[]>;//支持operater[],模板参数为int[]
+UniArray unia{ new int[5] {1,2,3,4,5} };
+
+
 //确定作用域指针是否为空或者有一个对象
 TEST_CASE("ScopedPtr is empty or") {
 	SECTION("true or full") {
