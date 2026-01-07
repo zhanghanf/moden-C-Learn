@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OathBreaker.cpp" />
+    <ClCompile Include="Myallocate.cpp" />
     <ClCompile Include="third_party\catch2\catch_amalgamated.cpp" />
   </ItemGroup>
   <ItemGroup>
