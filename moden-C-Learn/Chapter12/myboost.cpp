@@ -141,7 +141,7 @@ TEST_CASE("Boost Any Type Check Test") {
 	REQUIRE(a.type() == typeid(std::string));
 }
 
-//variant使用测试
+//variant使用测试,variant是一个类型安全的联合体，可以存储多种类型中的一种
 #include<boost/variant.hpp>
 using boost::variant;
 TEST_CASE("Boost Variant Test") {//测试variant的基本操作，可以存储多种类型中的一种

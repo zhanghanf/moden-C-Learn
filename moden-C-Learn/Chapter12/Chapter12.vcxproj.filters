@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="myboost.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\Chapter10\third_party\catch2\catch_amalgamated.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
