@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Chapter10\third_party\catch2\catch_amalgamated.cpp" />
-    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter10\third_party\catch2\catch_amalgamated.hpp" />
