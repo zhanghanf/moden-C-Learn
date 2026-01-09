@@ -1,20 +1,23 @@
 ﻿// Chapter13.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-
-#include <iostream>
-
-int main()
-{
-    std::cout << "Hello World!\n";
+//容器
+#define BOOST_TEST_MODULE MyTest //设置测试模块的名称，如果有多个测试文件，名称必须相同
+#include<boost/test/included/unit_test.hpp>
+//使用boost test框架
+BOOST_AUTO_TEST_CASE(hello) {
+	BOOST_CHECK(true);
 }
-
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
-
-// 入门使用技巧: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
+//BOOST_AUTO_TEST_CASE传入的必须是一个标识符，不能有空格等特殊字符
+//在单元测试中使用测试装置，使用BOOST_FIXTURE_TEST_CASE宏
+struct MyFixture {
+	MyFixture() {
+		//初始化代码
+	}
+	~MyFixture() {
+		//清理代码
+	}
+	int value = 42;
+};
+BOOST_FIXTURE_TEST_CASE(test_with_fixture, MyFixture) {
+	BOOST_CHECK(value == 42);
+}
+//BOOST_FIXTURE_TEST_CASE传入的第一个参数是测试用例的名称，第二个参数是测试装置的类型
