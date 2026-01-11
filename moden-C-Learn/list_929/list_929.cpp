@@ -36,12 +36,16 @@ void AIphaHistogram::ingest(const char* x) {
 //print方法打印每个字母及其频率计数和直方图信息
 void AIphaHistogram::print() const {
 	for (size_t i{}; i < 26; i++) {
-		printf("%c:%zd\n", static_cast<char>(i + posa), counts[i]);
+		printf("%c:", static_cast<char>(i + posa));
+		for(int j=0;j< counts[i];j++){
+			printf("*");
+		}
+		printf("\n");
 	}
 }
 
 int main(int argc, char** argv) {
-	AIphaHistogram hist;
+	AIphaHistogram hist{};
 	for (size_t i{ 1 }; i < static_cast<size_t>(argc); i++) {
 		//计算每个命令行参数的字符长度
 		hist.ingest(argv[i]);
