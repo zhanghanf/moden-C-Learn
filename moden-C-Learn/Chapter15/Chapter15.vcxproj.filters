@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Regular.cpp">
+    <ClCompile Include="Regex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

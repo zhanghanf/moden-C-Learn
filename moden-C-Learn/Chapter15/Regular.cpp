@@ -113,6 +113,5 @@ BOOST_AUTO_TEST_CASE(RegularCase6)
 	std::string s = "The color is red.";
 	std::regex re("red");//Æ¥Åä×Ö·û´®"red"
 	std::string result = std::regex_replace(s, re, "blue");//½«"red"Ìæ»»Îª"blue"
-	BOOST_TEST(result == "The color is blue.");
-}
+	BOOST_TEST(result == "The color is blue.");}
 BOOST_AUTO_TEST_SUITE_END()
