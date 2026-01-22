@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IOstream.cpp">
+    <ClCompile Include="Fstring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
